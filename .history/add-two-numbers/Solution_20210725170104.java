@@ -1,5 +1,3 @@
-import java.math.BigInteger;
-
 class ListNode {
     int val;
     ListNode next;
@@ -37,15 +35,15 @@ class Solution {
     }
 
     private static ListNode addTwoNumbers(ListNode l1, ListNode l2) {
-        BigInteger summedConcatenatedDigits = concatenateDigits(l1).add(concatenateDigits(l2));
+        long summedConcatenatedDigits = concatenateDigits(l1) + concatenateDigits(l2);
 
-        String[] reverseSummedConcatenatedDigits = new StringBuilder(summedConcatenatedDigits.toString()).reverse()
+        String[] reverseSummedConcatenatedDigits = new StringBuilder(longToString(summedConcatenatedDigits)).reverse()
                 .toString().split("");
 
         ListNode nextNode = null;
 
         for (int i = reverseSummedConcatenatedDigits.length - 1; i > -1; --i) {
-            ListNode currentNode = new ListNode(Integer.parseInt(reverseSummedConcatenatedDigits[i]), nextNode);
+            ListNode currentNode = new ListNode(stringToInt(reverseSummedConcatenatedDigits[i]), nextNode);
 
             nextNode = currentNode;
         }
@@ -53,15 +51,31 @@ class Solution {
         return nextNode;
     }
 
-    private static BigInteger concatenateDigits(ListNode node) {
+    private static long concatenateDigits(ListNode node) {
         StringBuilder concatenatedDigits = new StringBuilder();
 
         do {
-            concatenatedDigits.append(String.valueOf(node.val));
+            concatenatedDigits.append(intToString(node.val));
 
             node = node.next;
         } while (node != null);
 
-        return new BigInteger(concatenatedDigits.reverse().toString());
+        return stringToInt(concatenatedDigits.reverse().toString());
+    }
+
+    private static int stringToInt(String stringNumber) {
+        return Integer.parseInt(stringNumber);
+    }
+
+    private static long stringToLong(String stringNumber) {
+        return Integer.parseInt(stringNumber);
+    }
+
+    private static String intToString(int intNumber) {
+        return String.valueOf(intNumber);
+    }
+
+    private static String longToString(long longNumber) {
+        return String.valueOf(longNumber);
     }
 }

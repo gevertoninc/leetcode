@@ -1,5 +1,3 @@
-import java.math.BigInteger;
-
 class ListNode {
     int val;
     ListNode next;
@@ -31,21 +29,21 @@ class ListNode {
 class Solution {
     public static void main(String[] args) {
         ListNode node1 = new ListNode(2, new ListNode(4, new ListNode(3)));
-        ListNode node2 = new ListNode(5, new ListNode(6, new ListNode(4)));
+        ListNode node2 = new ListNode(9);
 
         System.out.println(addTwoNumbers(node1, node2));
     }
 
-    private static ListNode addTwoNumbers(ListNode l1, ListNode l2) {
-        BigInteger summedConcatenatedDigits = concatenateDigits(l1).add(concatenateDigits(l2));
+    private static ListNode addTwoNumbers(ListNode node1, ListNode node2) {
+        int summedConcatenatedDigits = concatenateDigits(node1) + concatenateDigits(node2);
 
-        String[] reverseSummedConcatenatedDigits = new StringBuilder(summedConcatenatedDigits.toString()).reverse()
-                .toString().split("");
+        String[] reverseSummedConcatenatedDigits = new StringBuilder(intToString(summedConcatenatedDigits)).toString()
+                .split("");
 
         ListNode nextNode = null;
 
         for (int i = reverseSummedConcatenatedDigits.length - 1; i > -1; --i) {
-            ListNode currentNode = new ListNode(Integer.parseInt(reverseSummedConcatenatedDigits[i]), nextNode);
+            ListNode currentNode = new ListNode(stringToInt(reverseSummedConcatenatedDigits[i]), nextNode);
 
             nextNode = currentNode;
         }
@@ -53,15 +51,23 @@ class Solution {
         return nextNode;
     }
 
-    private static BigInteger concatenateDigits(ListNode node) {
+    private static int concatenateDigits(ListNode node) {
         StringBuilder concatenatedDigits = new StringBuilder();
 
         do {
-            concatenatedDigits.append(String.valueOf(node.val));
+            concatenatedDigits.append(intToString(node.val));
 
             node = node.next;
         } while (node != null);
 
-        return new BigInteger(concatenatedDigits.reverse().toString());
+        return stringToInt(concatenatedDigits.reverse().toString());
+    }
+
+    private static int stringToInt(String string) {
+        return Integer.parseInt(string);
+    }
+
+    private static String intToString(int integer) {
+        return String.valueOf(integer);
     }
 }

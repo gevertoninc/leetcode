@@ -45,7 +45,7 @@ class Solution {
         ListNode nextNode = null;
 
         for (int i = reverseSummedConcatenatedDigits.length - 1; i > -1; --i) {
-            ListNode currentNode = new ListNode(Integer.parseInt(reverseSummedConcatenatedDigits[i]), nextNode);
+            ListNode currentNode = new ListNode(stringToInt(reverseSummedConcatenatedDigits[i]), nextNode);
 
             nextNode = currentNode;
         }
